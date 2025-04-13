@@ -4,8 +4,10 @@
 'https://github.com/ju8t1n203/DataLogger
 
 Option Explicit On
-Option Strict On
+'Option Strict On
+Imports System.Drawing.Drawing2D
 Imports System.IO.Ports
+Imports System.Runtime.Remoting.Services
 Imports System.Text
 
 Public Class MainForm
@@ -37,9 +39,13 @@ Public Class MainForm
         BasicQY.RecieveData(SerialPort, incoming)
     End Sub
 
+
+
     Private Sub TxTimer_Tick(sender As Object, e As EventArgs) Handles TxTimer.Tick
         Static iterration As Boolean = False
         Dim working As Byte = &H0
+
+        SampleRateTextBox.Text = $"{1 / (TxTimer.Interval * 0.001)}"
 
         If countinue = False Then
             Try
@@ -54,4 +60,27 @@ Public Class MainForm
         End If
     End Sub
 
+    Private Sub ExitButton_Click(sender As Object, e As EventArgs) Handles ExitButton.Click
+        Me.Close()
+    End Sub
+
+    Private Sub SampleRateTextBox_Validated(sender As Object, e As EventArgs) Handles SampleRateTextBox.Validated
+        Dim sampleRate As Integer
+
+        Try
+            sampleRate = CInt(1 / (SampleRateTextBox.Text))
+            If sampleRate < 101 And sampleRate > 0 Then
+                TxTimer.Interval = sampleRate
+            End If
+        Catch ex As Exception
+            MsgBox("Enter an integer value 1-100")
+        End Try
+
+        TxTimer.Enabled = True
+
+    End Sub
+
+    Private Sub SampleRateTextBox_Click(sender As Object, e As EventArgs) Handles SampleRateTextBox.Click
+        TxTimer.Enabled = False
+    End Sub
 End Class
