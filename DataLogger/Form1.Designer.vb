@@ -29,7 +29,7 @@ Partial Class MainForm
         Me.FromLabel = New System.Windows.Forms.Label()
         Me.SerialPort = New System.IO.Ports.SerialPort(Me.components)
         Me.COMMTimer = New System.Windows.Forms.Timer(Me.components)
-        Me.TxTimer = New System.Windows.Forms.Timer(Me.components)
+        Me.VerificationTimer = New System.Windows.Forms.Timer(Me.components)
         Me.ExitButton = New System.Windows.Forms.Button()
         Me.StartButton = New System.Windows.Forms.Button()
         Me.StopButton = New System.Windows.Forms.Button()
@@ -40,8 +40,16 @@ Partial Class MainForm
         Me.ContextMenuStrip = New System.Windows.Forms.ContextMenuStrip(Me.components)
         Me.SampleRateTextBox = New System.Windows.Forms.TextBox()
         Me.SampleRateLabel = New System.Windows.Forms.Label()
+        Me.FilePathStatusStrip = New System.Windows.Forms.StatusStrip()
+        Me.FilePathLabel = New System.Windows.Forms.ToolStripStatusLabel()
+        Me.ADC1ValueLabel = New System.Windows.Forms.Label()
+        Me.ADC1ValueTextBox = New System.Windows.Forms.TextBox()
+        Me.PictureBox1 = New System.Windows.Forms.PictureBox()
+        Me.TXTimer = New System.Windows.Forms.Timer(Me.components)
         Me.InputGroupBox.SuspendLayout()
         Me.TopMenuStrip.SuspendLayout()
+        Me.FilePathStatusStrip.SuspendLayout()
+        CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'InputGroupBox
@@ -49,7 +57,7 @@ Partial Class MainForm
         Me.InputGroupBox.Controls.Add(Me.COMMComboBox)
         Me.InputGroupBox.Controls.Add(Me.ConnectionLabel)
         Me.InputGroupBox.Controls.Add(Me.FromLabel)
-        Me.InputGroupBox.Location = New System.Drawing.Point(12, 355)
+        Me.InputGroupBox.Location = New System.Drawing.Point(12, 344)
         Me.InputGroupBox.Name = "InputGroupBox"
         Me.InputGroupBox.Size = New System.Drawing.Size(148, 83)
         Me.InputGroupBox.TabIndex = 0
@@ -88,12 +96,12 @@ Partial Class MainForm
         'COMMTimer
         '
         '
-        'TxTimer
+        'VerificationTimer
         '
         '
         'ExitButton
         '
-        Me.ExitButton.Location = New System.Drawing.Point(559, 367)
+        Me.ExitButton.Location = New System.Drawing.Point(559, 356)
         Me.ExitButton.Name = "ExitButton"
         Me.ExitButton.Size = New System.Drawing.Size(125, 71)
         Me.ExitButton.TabIndex = 1
@@ -102,7 +110,7 @@ Partial Class MainForm
         '
         'StartButton
         '
-        Me.StartButton.Location = New System.Drawing.Point(166, 367)
+        Me.StartButton.Location = New System.Drawing.Point(166, 356)
         Me.StartButton.Name = "StartButton"
         Me.StartButton.Size = New System.Drawing.Size(125, 71)
         Me.StartButton.TabIndex = 2
@@ -111,7 +119,7 @@ Partial Class MainForm
         '
         'StopButton
         '
-        Me.StopButton.Location = New System.Drawing.Point(297, 367)
+        Me.StopButton.Location = New System.Drawing.Point(297, 356)
         Me.StopButton.Name = "StopButton"
         Me.StopButton.Size = New System.Drawing.Size(125, 71)
         Me.StopButton.TabIndex = 3
@@ -120,7 +128,7 @@ Partial Class MainForm
         '
         'SaveButton
         '
-        Me.SaveButton.Location = New System.Drawing.Point(428, 367)
+        Me.SaveButton.Location = New System.Drawing.Point(428, 356)
         Me.SaveButton.Name = "SaveButton"
         Me.SaveButton.Size = New System.Drawing.Size(125, 71)
         Me.SaveButton.TabIndex = 4
@@ -149,7 +157,7 @@ Partial Class MainForm
         '
         'SampleRateTextBox
         '
-        Me.SampleRateTextBox.Location = New System.Drawing.Point(643, 28)
+        Me.SampleRateTextBox.Location = New System.Drawing.Point(636, 323)
         Me.SampleRateTextBox.Name = "SampleRateTextBox"
         Me.SampleRateTextBox.Size = New System.Drawing.Size(43, 20)
         Me.SampleRateTextBox.TabIndex = 7
@@ -157,17 +165,64 @@ Partial Class MainForm
         'SampleRateLabel
         '
         Me.SampleRateLabel.AutoSize = True
-        Me.SampleRateLabel.Location = New System.Drawing.Point(528, 31)
+        Me.SampleRateLabel.Location = New System.Drawing.Point(521, 326)
         Me.SampleRateLabel.Name = "SampleRateLabel"
         Me.SampleRateLabel.Size = New System.Drawing.Size(109, 13)
         Me.SampleRateLabel.TabIndex = 8
         Me.SampleRateLabel.Text = "Samples Per Second:"
+        '
+        'FilePathStatusStrip
+        '
+        Me.FilePathStatusStrip.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.FilePathLabel})
+        Me.FilePathStatusStrip.Location = New System.Drawing.Point(0, 428)
+        Me.FilePathStatusStrip.Name = "FilePathStatusStrip"
+        Me.FilePathStatusStrip.Size = New System.Drawing.Size(698, 22)
+        Me.FilePathStatusStrip.TabIndex = 9
+        Me.FilePathStatusStrip.Text = "StatusStrip1"
+        '
+        'FilePathLabel
+        '
+        Me.FilePathLabel.Name = "FilePathLabel"
+        Me.FilePathLabel.Size = New System.Drawing.Size(66, 17)
+        Me.FilePathLabel.Text = "Saving To:"
+        '
+        'ADC1ValueLabel
+        '
+        Me.ADC1ValueLabel.AutoSize = True
+        Me.ADC1ValueLabel.Location = New System.Drawing.Point(398, 326)
+        Me.ADC1ValueLabel.Name = "ADC1ValueLabel"
+        Me.ADC1ValueLabel.Size = New System.Drawing.Size(68, 13)
+        Me.ADC1ValueLabel.TabIndex = 11
+        Me.ADC1ValueLabel.Text = "ADC1 Value:"
+        '
+        'ADC1ValueTextBox
+        '
+        Me.ADC1ValueTextBox.Location = New System.Drawing.Point(472, 323)
+        Me.ADC1ValueTextBox.Name = "ADC1ValueTextBox"
+        Me.ADC1ValueTextBox.Size = New System.Drawing.Size(43, 20)
+        Me.ADC1ValueTextBox.TabIndex = 10
+        '
+        'PictureBox1
+        '
+        Me.PictureBox1.BackColor = System.Drawing.Color.White
+        Me.PictureBox1.Location = New System.Drawing.Point(12, 28)
+        Me.PictureBox1.Name = "PictureBox1"
+        Me.PictureBox1.Size = New System.Drawing.Size(674, 289)
+        Me.PictureBox1.TabIndex = 12
+        Me.PictureBox1.TabStop = False
+        '
+        'TXTimer
+        '
         '
         'MainForm
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(698, 450)
+        Me.Controls.Add(Me.PictureBox1)
+        Me.Controls.Add(Me.ADC1ValueLabel)
+        Me.Controls.Add(Me.ADC1ValueTextBox)
+        Me.Controls.Add(Me.FilePathStatusStrip)
         Me.Controls.Add(Me.SampleRateLabel)
         Me.Controls.Add(Me.SampleRateTextBox)
         Me.Controls.Add(Me.SaveButton)
@@ -178,11 +233,15 @@ Partial Class MainForm
         Me.Controls.Add(Me.TopMenuStrip)
         Me.MainMenuStrip = Me.TopMenuStrip
         Me.Name = "MainForm"
+        Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "Data Logger"
         Me.InputGroupBox.ResumeLayout(False)
         Me.InputGroupBox.PerformLayout()
         Me.TopMenuStrip.ResumeLayout(False)
         Me.TopMenuStrip.PerformLayout()
+        Me.FilePathStatusStrip.ResumeLayout(False)
+        Me.FilePathStatusStrip.PerformLayout()
+        CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -194,7 +253,7 @@ Partial Class MainForm
     Friend WithEvents FromLabel As Label
     Friend WithEvents SerialPort As IO.Ports.SerialPort
     Friend WithEvents COMMTimer As Timer
-    Friend WithEvents TxTimer As Timer
+    Friend WithEvents VerificationTimer As Timer
     Friend WithEvents ExitButton As Button
     Friend WithEvents StartButton As Button
     Friend WithEvents StopButton As Button
@@ -205,4 +264,10 @@ Partial Class MainForm
     Friend WithEvents ContextMenuStrip As ContextMenuStrip
     Friend WithEvents SampleRateTextBox As TextBox
     Friend WithEvents SampleRateLabel As Label
+    Friend WithEvents FilePathStatusStrip As StatusStrip
+    Friend WithEvents FilePathLabel As ToolStripStatusLabel
+    Friend WithEvents ADC1ValueLabel As Label
+    Friend WithEvents ADC1ValueTextBox As TextBox
+    Friend WithEvents PictureBox1 As PictureBox
+    Friend WithEvents TXTimer As Timer
 End Class

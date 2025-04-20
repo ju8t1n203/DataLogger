@@ -13,6 +13,7 @@ Imports System.Text
 Public Class MainForm
     Dim countinue As Boolean = False
     Dim incoming As New Queue(Of Byte)
+    Dim ADC(1) As Integer
 
     Private Sub MainForm_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         COMMTimer.Enabled = True
@@ -31,7 +32,7 @@ Public Class MainForm
                 COMMComboBox.Items.Add(port)
             Next
             COMMTimer.Enabled = False
-            TxTimer.Enabled = True
+            VerificationTimer.Enabled = True
         End If
     End Sub
 
@@ -39,13 +40,11 @@ Public Class MainForm
         BasicQY.RecieveData(SerialPort, incoming)
     End Sub
 
-
-
-    Private Sub TxTimer_Tick(sender As Object, e As EventArgs) Handles TxTimer.Tick
+    Private Sub VerificationTimer_Tick(sender As Object, e As EventArgs) Handles VerificationTimer.Tick
         Static iterration As Boolean = False
         Dim working As Byte = &H0
 
-        SampleRateTextBox.Text = $"{1 / (TxTimer.Interval * 0.001)}"
+        SampleRateTextBox.Text = $"{1 / (VerificationTimer.Interval * 0.001)}"
 
         If countinue = False Then
             Try
@@ -57,7 +56,18 @@ Public Class MainForm
             countinue = BasicQY.QYCheck(working)
         Else
             ConnectionLabel.Text = "Quiet Board is Connected"
+            VerificationTimer.Enabled = False
         End If
+    End Sub
+
+    Private Sub TXTimer_Tick(sender As Object, e As EventArgs) Handles TXTimer.Tick
+        Dim _bytes(1) As Byte
+        _bytes(0) = &H51
+        _bytes(1) = &H52
+
+        SerialPort.Write(_bytes, 0, 2)
+        ADC = BasicQY.GetAnalog(incoming)
+        ADC1ValueTextBox.Text = $"{ADC(0)}"
     End Sub
 
     Private Sub ExitButton_Click(sender As Object, e As EventArgs) Handles ExitButton.Click
@@ -70,17 +80,29 @@ Public Class MainForm
         Try
             sampleRate = CInt(1 / (SampleRateTextBox.Text))
             If sampleRate < 101 And sampleRate > 0 Then
-                TxTimer.Interval = sampleRate
+                VerificationTimer.Interval = sampleRate
             End If
         Catch ex As Exception
             MsgBox("Enter an integer value 1-100")
         End Try
 
-        TxTimer.Enabled = True
+        VerificationTimer.Enabled = True
 
     End Sub
 
     Private Sub SampleRateTextBox_Click(sender As Object, e As EventArgs) Handles SampleRateTextBox.Click
-        TxTimer.Enabled = False
+        VerificationTimer.Enabled = False
+    End Sub
+
+    Private Sub StartButton_Click(sender As Object, e As EventArgs) Handles StartButton.Click
+        If countinue = True Then
+            TXTimer.Enabled = True
+        Else
+            MsgBox("Please Connect to a QY@ Board")
+        End If
+    End Sub
+
+    Private Sub StopButton_Click(sender As Object, e As EventArgs) Handles StopButton.Click
+        TXTimer.Enabled = False
     End Sub
 End Class
