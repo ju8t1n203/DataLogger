@@ -60,6 +60,7 @@ Public Class MainForm
         End If
     End Sub
 
+    'data handling-------------------------------------------------
     Private Sub TXTimer_Tick(sender As Object, e As EventArgs) Handles TXTimer.Tick
         Dim _bytes(1) As Byte
         _bytes(0) = &H51
@@ -70,32 +71,30 @@ Public Class MainForm
         ADC1ValueTextBox.Text = $"{ADC(0)}"
     End Sub
 
-    Private Sub ExitButton_Click(sender As Object, e As EventArgs) Handles ExitButton.Click
-        Me.Close()
-    End Sub
-
     Private Sub SampleRateTextBox_Validated(sender As Object, e As EventArgs) Handles SampleRateTextBox.Validated
         Dim sampleRate As Integer
 
         Try
             sampleRate = CInt(1 / (SampleRateTextBox.Text))
             If sampleRate < 101 And sampleRate > 0 Then
-                VerificationTimer.Interval = sampleRate
+                TXTimer.Interval = sampleRate
             End If
         Catch ex As Exception
             MsgBox("Enter an integer value 1-100")
         End Try
 
-        VerificationTimer.Enabled = True
+        TXTimer.Enabled = True
 
     End Sub
 
     Private Sub SampleRateTextBox_Click(sender As Object, e As EventArgs) Handles SampleRateTextBox.Click
-        VerificationTimer.Enabled = False
+        TXTimer.Enabled = False
     End Sub
 
+    'buttons-------------------------------------------------------------
     Private Sub StartButton_Click(sender As Object, e As EventArgs) Handles StartButton.Click
         If countinue = True Then
+            SaveButton.Enabled = False
             TXTimer.Enabled = True
         Else
             MsgBox("Please Connect to a QY@ Board")
@@ -103,6 +102,16 @@ Public Class MainForm
     End Sub
 
     Private Sub StopButton_Click(sender As Object, e As EventArgs) Handles StopButton.Click
+        SaveButton.Enabled = True
         TXTimer.Enabled = False
     End Sub
+
+    Private Sub SaveButton_Click(sender As Object, e As EventArgs) Handles SaveButton.Click
+
+    End Sub
+
+    Private Sub ExitButton_Click(sender As Object, e As EventArgs) Handles ExitButton.Click
+        Me.Close()
+    End Sub
+
 End Class
