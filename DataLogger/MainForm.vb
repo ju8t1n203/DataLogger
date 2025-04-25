@@ -123,7 +123,9 @@ Public Class MainForm
     End Sub
 
     Private Sub SaveButton_Click(sender As Object, e As EventArgs) Handles SaveButton.Click
-        FileStuff.SaveToLogFile(currentLog)
+        FileStuff.SaveToLogFile(currentlog)
+        currentlog.Clear()
+        SaveButton.Enabled = False
     End Sub
 
     Private Sub ExitButton_Click(sender As Object, e As EventArgs) Handles ExitButton.Click
