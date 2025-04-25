@@ -11,9 +11,9 @@ Imports System.Runtime.Remoting.Services
 Imports System.Text
 
 Public Class MainForm
-    Dim countinue As Boolean = False
     Dim incoming As New Queue(Of Byte)
-    Dim ADC(1) As Integer
+    Dim ADC(1, 2) As Integer
+    Dim currentLog(,) As String
 
     Private Sub MainForm_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         COMMTimer.Enabled = True
@@ -21,7 +21,7 @@ Public Class MainForm
 
     'serial port setup-----------------------------------------------
     Private Sub COMMComboBox_SelectedIndexChanged(sender As Object, e As EventArgs) Handles COMMComboBox.SelectedIndexChanged
-        BasicQY.VerifyQ(countinue, SerialPort, COMMComboBox)
+        BasicQY.VerifyQ(SerialPort, COMMComboBox)
     End Sub
 
     Private Sub COMMTimer_Tick(sender As Object, e As EventArgs) Handles COMMTimer.Tick
@@ -43,6 +43,7 @@ Public Class MainForm
     Private Sub VerificationTimer_Tick(sender As Object, e As EventArgs) Handles VerificationTimer.Tick
         Static iterration As Boolean = False
         Dim working As Byte = &H0
+        Static countinue As Boolean = False
 
         SampleRateTextBox.Text = $"{1 / (VerificationTimer.Interval * 0.001)}"
 
@@ -57,6 +58,7 @@ Public Class MainForm
         Else
             ConnectionLabel.Text = "Quiet Board is Connected"
             VerificationTimer.Enabled = False
+            countinue = False
         End If
     End Sub
 
@@ -68,7 +70,7 @@ Public Class MainForm
 
         SerialPort.Write(_bytes, 0, 2)
         ADC = BasicQY.GetAnalog(incoming)
-        ADC1ValueTextBox.Text = $"{ADC(0)}"
+        ADC1ValueTextBox.Text = $"{ADC(0, 0)}"
     End Sub
 
     Private Sub SampleRateTextBox_Validated(sender As Object, e As EventArgs) Handles SampleRateTextBox.Validated
@@ -93,7 +95,7 @@ Public Class MainForm
 
     'buttons-------------------------------------------------------------
     Private Sub StartButton_Click(sender As Object, e As EventArgs) Handles StartButton.Click
-        If countinue = True Then
+        If VerificationTimer.Enabled = False Then
             SaveButton.Enabled = False
             TXTimer.Enabled = True
         Else
