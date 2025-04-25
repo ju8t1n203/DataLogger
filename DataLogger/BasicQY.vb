@@ -55,11 +55,15 @@ Public Class BasicQY
 
         If incoming.Count > 3 Then
             msb1 = incoming.Dequeue
+            adcValues(0, 1) = CStr(msb1)
             lsb1 = incoming.Dequeue
+            adcValues(0, 2) = CStr(lsb1)
             adcValues(0, 0) = (CInt(msb1) * 4) + CInt(lsb1 >> 6)
 
             msb2 = incoming.Dequeue
+            adcValues(1, 1) = CStr(msb2)
             lsb2 = incoming.Dequeue
+            adcValues(1, 2) = CStr(lsb1)
             adcValues(1, 0) = (CInt(msb2) * 4) + CInt(lsb2 >> 6)
 
             incoming.Clear()

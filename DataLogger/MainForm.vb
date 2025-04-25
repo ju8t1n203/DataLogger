@@ -13,10 +13,12 @@ Imports System.Text
 Public Class MainForm
     Dim incoming As New Queue(Of Byte)
     Dim ADC(1, 2) As Integer
-    Dim currentLog(,) As String
+    'Dim currentLog(,) As String
+    Dim currentlog As New List(Of String())
 
     Private Sub MainForm_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         COMMTimer.Enabled = True
+        ADC1ValueTextBox.Text = "N/A"
     End Sub
 
     'serial port setup-----------------------------------------------
@@ -71,6 +73,17 @@ Public Class MainForm
         SerialPort.Write(_bytes, 0, 2)
         ADC = BasicQY.GetAnalog(incoming)
         ADC1ValueTextBox.Text = $"{ADC(0, 0)}"
+
+        Dim nextRow As String() = New String(4) {}
+
+        nextRow(0) = "$$"
+        nextRow(1) = "AN1"
+        nextRow(2) = $"{CStr(ADC(0, 1))}"
+        nextRow(3) = $"{CStr(ADC(0, 2))}"
+        nextRow(4) = $"{DateTime.Now.ToString("mm:ss:ff")}"
+
+        currentlog.Add(nextRow)
+
     End Sub
 
     Private Sub SampleRateTextBox_Validated(sender As Object, e As EventArgs) Handles SampleRateTextBox.Validated
@@ -106,14 +119,22 @@ Public Class MainForm
     Private Sub StopButton_Click(sender As Object, e As EventArgs) Handles StopButton.Click
         SaveButton.Enabled = True
         TXTimer.Enabled = False
+        ADC1ValueTextBox.Text = "N/A"
     End Sub
 
     Private Sub SaveButton_Click(sender As Object, e As EventArgs) Handles SaveButton.Click
-
+        FileStuff.SaveToLogFile(currentLog)
     End Sub
 
     Private Sub ExitButton_Click(sender As Object, e As EventArgs) Handles ExitButton.Click
         Me.Close()
     End Sub
+
+    Sub forai()
+        'currentLog(0, 1) = "in"
+        'currentLog(0, 2) = "your"
+    End Sub
+
+
 
 End Class

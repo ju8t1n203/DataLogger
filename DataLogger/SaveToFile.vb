@@ -13,8 +13,8 @@ Public Class FileStuff
         Return fileName
     End Function
 
-    Public Shared Sub SaveToLogFile(toBeSaved() As String)
-        Dim folderPath As String = "./logs/"
+    Public Shared Sub SaveToLogFile(toBeSaved As List(Of String()))
+        Dim folderPath As String = "../logs/"
         Dim fileName As String = GetFileName()
         Dim fullPath As String = IO.Path.Combine(folderPath, fileName)
 
@@ -27,14 +27,20 @@ Public Class FileStuff
         If IO.File.Exists(fullPath) Then
             'file exists write to it
             Using writer As New IO.StreamWriter(fullPath, True)
-                For Each line As String In toBeSaved
+                Dim row As Integer = toBeSaved.Count
+
+                For i = 0 To row - 1
+                    Dim line As String = String.Join(",", toBeSaved.Item(i))
                     writer.WriteLine(line)
                 Next
             End Using
         Else
             'file does not exsist creat it and write to it
             Using writer As New IO.StreamWriter(fullPath)
-                For Each line As String In toBeSaved
+                Dim row = DirectCast(toBeSaved, IList)
+
+                For i = 0 To row.Count - 1
+                    Dim line As String = DirectCast(row(i), String)
                     writer.WriteLine(line)
                 Next
             End Using
