@@ -4,11 +4,14 @@
 Public Class FileStuff
 
     Public Shared Function GetFileName()
-        Dim fileName As String = $"log_{DateTime.Now.ToString("yyMMddHH")}.log"
+        'general file name maker
+        Dim fileName As String
+
+        'currently makes the file name from the year, month, day, hour
+        fileName = $"log_{DateTime.Now.ToString("yyMMddHH")}.log"
 
         Return fileName
     End Function
-
 
     Public Shared Sub SaveToLogFile(toBeSaved() As String)
         Dim folderPath As String = "./logs/"
@@ -37,10 +40,5 @@ Public Class FileStuff
             End Using
         End If
     End Sub
-
-
-
-
-
 
 End Class
