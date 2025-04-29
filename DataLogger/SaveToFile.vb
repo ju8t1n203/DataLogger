@@ -33,7 +33,7 @@ Public Class FileStuff
                     Dim line As String = String.Join(",", toBeSaved.Item(i))
                     writer.WriteLine(line)
                 Next
-                writer.WriteLine(StrDup(80, "*"))
+                writer.WriteLine(StrDup(24, "*"))
             End Using
         Else
             'file does not exsist creat it and write to it
