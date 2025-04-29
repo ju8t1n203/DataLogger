@@ -54,6 +54,7 @@ Partial Class MainForm
         '
         'InputGroupBox
         '
+        Me.InputGroupBox.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
         Me.InputGroupBox.Controls.Add(Me.COMMComboBox)
         Me.InputGroupBox.Controls.Add(Me.ConnectionLabel)
         Me.InputGroupBox.Controls.Add(Me.FromLabel)
@@ -70,7 +71,7 @@ Partial Class MainForm
         Me.COMMComboBox.Location = New System.Drawing.Point(45, 24)
         Me.COMMComboBox.Name = "COMMComboBox"
         Me.COMMComboBox.Size = New System.Drawing.Size(88, 21)
-        Me.COMMComboBox.TabIndex = 1
+        Me.COMMComboBox.TabIndex = 0
         '
         'ConnectionLabel
         '
@@ -101,24 +102,27 @@ Partial Class MainForm
         '
         'ExitButton
         '
+        Me.ExitButton.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
         Me.ExitButton.Location = New System.Drawing.Point(559, 356)
         Me.ExitButton.Name = "ExitButton"
         Me.ExitButton.Size = New System.Drawing.Size(125, 71)
-        Me.ExitButton.TabIndex = 1
+        Me.ExitButton.TabIndex = 5
         Me.ExitButton.Text = "E&xit"
         Me.ExitButton.UseVisualStyleBackColor = True
         '
         'StartButton
         '
+        Me.StartButton.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
         Me.StartButton.Location = New System.Drawing.Point(166, 356)
         Me.StartButton.Name = "StartButton"
         Me.StartButton.Size = New System.Drawing.Size(125, 71)
-        Me.StartButton.TabIndex = 2
+        Me.StartButton.TabIndex = 1
         Me.StartButton.Text = "St&art"
         Me.StartButton.UseVisualStyleBackColor = True
         '
         'StopButton
         '
+        Me.StopButton.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
         Me.StopButton.Location = New System.Drawing.Point(297, 356)
         Me.StopButton.Name = "StopButton"
         Me.StopButton.Size = New System.Drawing.Size(125, 71)
@@ -128,6 +132,7 @@ Partial Class MainForm
         '
         'SaveButton
         '
+        Me.SaveButton.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
         Me.SaveButton.Location = New System.Drawing.Point(428, 356)
         Me.SaveButton.Name = "SaveButton"
         Me.SaveButton.Size = New System.Drawing.Size(125, 71)
@@ -157,13 +162,15 @@ Partial Class MainForm
         '
         'SampleRateTextBox
         '
+        Me.SampleRateTextBox.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
         Me.SampleRateTextBox.Location = New System.Drawing.Point(636, 323)
         Me.SampleRateTextBox.Name = "SampleRateTextBox"
         Me.SampleRateTextBox.Size = New System.Drawing.Size(43, 20)
-        Me.SampleRateTextBox.TabIndex = 7
+        Me.SampleRateTextBox.TabIndex = 2
         '
         'SampleRateLabel
         '
+        Me.SampleRateLabel.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
         Me.SampleRateLabel.AutoSize = True
         Me.SampleRateLabel.Location = New System.Drawing.Point(521, 326)
         Me.SampleRateLabel.Name = "SampleRateLabel"
@@ -188,6 +195,7 @@ Partial Class MainForm
         '
         'ADC1ValueLabel
         '
+        Me.ADC1ValueLabel.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
         Me.ADC1ValueLabel.AutoSize = True
         Me.ADC1ValueLabel.Location = New System.Drawing.Point(398, 326)
         Me.ADC1ValueLabel.Name = "ADC1ValueLabel"
@@ -197,13 +205,18 @@ Partial Class MainForm
         '
         'ADC1ValueTextBox
         '
+        Me.ADC1ValueTextBox.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
         Me.ADC1ValueTextBox.Location = New System.Drawing.Point(472, 323)
         Me.ADC1ValueTextBox.Name = "ADC1ValueTextBox"
         Me.ADC1ValueTextBox.Size = New System.Drawing.Size(43, 20)
         Me.ADC1ValueTextBox.TabIndex = 10
+        Me.ADC1ValueTextBox.TabStop = False
         '
         'PictureBox1
         '
+        Me.PictureBox1.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+            Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.PictureBox1.BackColor = System.Drawing.Color.White
         Me.PictureBox1.Location = New System.Drawing.Point(12, 28)
         Me.PictureBox1.Name = "PictureBox1"
